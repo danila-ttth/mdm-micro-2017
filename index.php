@@ -20,79 +20,55 @@
     if (!isset($_POST['terms'])) {
       $_SESSION['msg'] = "Please agree to terms";
       redirect_to();
-//    } else {
-//      $c_url = 'http://mdm-catalog-service.web.xm/marketing/trendContest/createGameParticipant';
-//      $c_arguments = '_format=json&trendGameParticipant%5Bmarket%5D=UK';
-//      $c_arguments .= '&trendGameParticipant%5Blanguage%5D=en';
-//      $c_arguments .= '&trendGameParticipant%5BgameName%5D=UKGAME2017';
-//      $c_arguments .= '&trendGameParticipant%5Bcivility%5D=1';
-//      $c_arguments .= '&trendGameParticipant%5BfirstName%5D=' . $fname;
-//      $c_arguments .= '&trendGameParticipant%5Bname%5D=' . $lname;
-//      $c_arguments .= '&trendGameParticipant%5Bemail%5D=' . $u_email;
-//      $c_arguments .= '&trendGameParticipant%5Boptin%5D=yes';
-//      $ch = curl_init();
-//      $curl_parameters = array(
-//          CURLOPT_HTTPHEADER => array(
-//              'Accept: application/json',
-//              'Content-Type: application/x-www-form-urlencoded'
-//          ),
-//          CURLOPT_RETURNTRANSFER => true,
-//          CURLOPT_URL => $c_url,
-//          CURLOPT_POSTFIELDS => $c_arguments,
-//          CURLOPT_POST => true,
-//          CURLOPT_RETURNTRANSFER => 1,
-//          CURLOPT_VERBOSE => 1,
-//          CURLOPT_HEADER => 1
-//      );
-//      curl_setopt_array($ch, $curl_parameters);
-//		die(var_dump($curl_parameters));
-//      $response = curl_exec($ch);
-//      $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-//      $body = substr($response, $header_size);
-//      $return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//      curl_close($ch);
-//
-//      $decoded = json_decode($body, true);
-////	  die(var_dump($decoded));
-//      if (isset($decoded['status']) && $decoded['status'] == false) {
-//        if ($return_code == 409) {
-//          $_SESSION['msg'] = "Email already exists";
-//          redirect_to();
-//        } else {
-//          $_SESSION['msg'] = "Please complete all fields";
-//          redirect_to();
-//        }
-//      } else {
-//        $_SESSION['success'] = "true";
-//        header("Location: index.php");
-//        exit;
-//      }
-//    }
-	}else{
-		$c_url = 'http://www.maisonsdumonde.com/email_entry/create?email='.$email.'&first_name='.$fname.'&name='.$lname.'&zip_code=12345&origin=compUK2016&market=UK&language=en&opt_in=true';
-          $response = file_get_contents($c_url, false);
+   } else {
+     $c_url = 'http://mdm-catalog-service.web.xm/marketing/trendContest/createGameParticipant';
+     $c_arguments = '_format=json&trendGameParticipant%5Bmarket%5D=UK';
+     $c_arguments .= '&trendGameParticipant%5Blanguage%5D=en';
+     $c_arguments .= '&trendGameParticipant%5BgameName%5D=UKGAME2017';
+     $c_arguments .= '&trendGameParticipant%5Bcivility%5D=1';
+     $c_arguments .= '&trendGameParticipant%5BfirstName%5D=' . $fname;
+     $c_arguments .= '&trendGameParticipant%5Bname%5D=' . $lname;
+     $c_arguments .= '&trendGameParticipant%5Bemail%5D=' . $u_email;
+     $c_arguments .= '&trendGameParticipant%5Boptin%5D=yes';
+     $ch = curl_init();
+     $curl_parameters = array(
+         CURLOPT_HTTPHEADER => array(
+             'Accept: application/json',
+             'Content-Type: application/x-www-form-urlencoded'
+         ),
+         CURLOPT_RETURNTRANSFER => true,
+         CURLOPT_URL => $c_url,
+         CURLOPT_POSTFIELDS => $c_arguments,
+         CURLOPT_POST => true,
+         CURLOPT_RETURNTRANSFER => 1,
+         CURLOPT_VERBOSE => 1,
+         CURLOPT_HEADER => 1
+     );
+     curl_setopt_array($ch, $curl_parameters);
+		die(var_dump($curl_parameters));
+     $response = curl_exec($ch);
+     $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+     $body = substr($response, $header_size);
+     $return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+     curl_close($ch);
 
-          $decoded = json_decode($response, true);
-		//die(var_dump($decoded));
-
-            if (isset($decoded['status']) && $decoded['status'] == 'error') {
-
-                if($decoded['code'] == 2){
-                    $_SESSION['msg'] = "Email already exists";
-					redirect_to();
-                } else {
-                    $_SESSION['msg'] = "Please complete all fields";
-					redirect_to();
-                }
-
-            } else {
-				$_SESSION['success'] = "true";
-				header("Location: index.php");
-				exit;
-			}
-
-      }
-  }
+     $decoded = json_decode($body, true);
+//	  die(var_dump($decoded));
+     if (isset($decoded['status']) && $decoded['status'] == false) {
+       if ($return_code == 409) {
+         $_SESSION['msg'] = "Email already exists";
+         redirect_to();
+       } else {
+         $_SESSION['msg'] = "Please complete all fields";
+         redirect_to();
+       }
+     } else {
+       $_SESSION['success'] = "true";
+       header("Location: index.php");
+       exit;
+     }
+   }
+	}
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
