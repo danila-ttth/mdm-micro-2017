@@ -117,7 +117,7 @@
   <div class="row fw">
     <div class="small-12 columns">
       <p class="text-center thin">The winners will be chosen at random after the competition closes.<br />
-        To enter simply submit the form below before 31/05/2017</p>
+        To enter simply submit the form below before 30/06/2017</p>
       <?php if(!empty($error)){ ?><div class="error-container phperror"><?php echo $error; ?></div><?php } ?>
       <form data-abide novalidate method="post" action="index.php">
         <div class="row expanded">
